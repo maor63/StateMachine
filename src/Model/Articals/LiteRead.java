@@ -13,7 +13,7 @@ public class LiteRead extends State {
     @Override
     public void read() {
         if(readed == 8)
-            manager.reasercher();
+            manager.setReasercher();
         readed++;
     }
 

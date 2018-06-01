@@ -12,7 +12,7 @@ public class BearlyRead extends State {
     @Override
     public void read() {
         if(readed == 3)
-            manager.liteReader();
+            manager.setLiteReader();
         readed++;
     }
 

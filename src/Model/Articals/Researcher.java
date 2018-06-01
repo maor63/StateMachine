@@ -3,10 +3,10 @@ package Model.Articals;
 import Model.Manager;
 import Model.State;
 
-public class Reasercher extends State {
+public class Researcher extends State {
     int readed = 8;
 
-    public Reasercher(Manager manager) {
+    public Researcher(Manager manager) {
         super(manager);
     }
 
