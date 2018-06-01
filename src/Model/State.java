@@ -1,6 +1,12 @@
 package Model;
 
 public abstract class State {
+    protected Manager manager;
+
+    public State(Manager manager) {
+        this.manager = manager;
+    }
+
     public void exam(int score){}
 
     public void read(){}

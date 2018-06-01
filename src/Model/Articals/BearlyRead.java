@@ -1,15 +1,18 @@
-package Model.ReadArticals;
+package Model.Articals;
 
-import Model.Main;
+import Model.Manager;
 import Model.State;
 
 public class BearlyRead extends State {
-    int readed = 0;
-    Main m;
+    private int readed = 0;
+    public BearlyRead(Manager manager) {
+        super(manager);
+    }
+
     @Override
     public void read() {
         if(readed == 3)
-            m.liteReader();
+            manager.liteReader();
         readed++;
     }
 

@@ -1,9 +1,13 @@
-package Model;
+package Model.Forum;
 
-public class PostState extends State {
+import Model.Manager;
+import Model.State;
+
+public class PostState extends State
+{
     public int post_count = 0;
-    public PostState() {
-        System.out.println("entered PostState state");
+    public PostState(Manager manager) {
+        super(manager);
     }
 
     @Override

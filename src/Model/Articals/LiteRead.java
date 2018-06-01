@@ -1,15 +1,19 @@
-package Model.ReadArticals;
+package Model.Articals;
 
-import Model.Main;
+import Model.Manager;
 import Model.State;
 
 public class LiteRead extends State {
     int readed = 3;
-    Main m;
+
+    public LiteRead(Manager manager) {
+        super(manager);
+    }
+
     @Override
     public void read() {
         if(readed == 8)
-            m.reasercher();
+            manager.reasercher();
         readed++;
     }
 

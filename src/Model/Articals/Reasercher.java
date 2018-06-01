@@ -1,11 +1,15 @@
-package Model.ReadArticals;
+package Model.Articals;
 
-import Model.Main;
+import Model.Manager;
 import Model.State;
 
 public class Reasercher extends State {
     int readed = 8;
-    Main m;
+
+    public Reasercher(Manager manager) {
+        super(manager);
+    }
+
     @Override
     public void read() {
         if(readed <= 10)
