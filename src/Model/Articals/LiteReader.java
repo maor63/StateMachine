@@ -3,22 +3,23 @@ package Model.Articals;
 import Model.Manager;
 import Model.State;
 
-public class Researcher extends State {
+public class LiteReader extends State {
     public int readed;
 
-    public Researcher(Manager manager) {
+    public LiteReader(Manager manager) {
         super(manager);
-        readed = 8;
+        readed = 3;
     }
 
     @Override
     public void read() {
-        if (readed < 10)
-            readed++;
+        readed++;
+        if(readed == 8)
+            manager.setReasercher(readed);
     }
 
     @Override
     public String status(String text) {
-        return "***" + text + "***";
+        return "*"+ text+"*";
     }
 }

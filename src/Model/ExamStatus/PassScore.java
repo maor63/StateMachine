@@ -10,7 +10,7 @@ public class PassScore extends State
     }
 
     @Override
-    public void status(String text) {
-        super.status(text + " :)");
+    public String status(String text) {
+        return text + " :)";
     }
 }

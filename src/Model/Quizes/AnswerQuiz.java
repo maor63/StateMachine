@@ -10,12 +10,7 @@ public class AnswerQuiz extends State
     }
 
     public void answerQuiz(int quiz_num){
-        loadQuiz(quiz_num);
-        manager.setNotQuiz();
-    }
-
-    private void loadQuiz(int quiz_num) {
-
+        manager.setNotAnswer();
     }
 
 }

@@ -1,31 +1,30 @@
 package Model;
 
-import Model.Articals.BearlyRead;
-import Model.Articals.LiteRead;
+import Model.Articals.BarelyRead;
+import Model.Articals.LiteReader;
 import Model.Articals.Researcher;
-import Model.ExamStatus.ExcellentScore;
-import Model.ExamStatus.FailedExam;
-import Model.ExamStatus.NotExamed;
-import Model.ExamStatus.PassScore;
-import Model.Forum.PostState;
+import Model.ExamStatus.*;
+import Model.Forum.ActivelyPost;
+import Model.Forum.BarelyPost;
 import Model.Quizes.AnswerQuiz;
-import Model.Quizes.NotQuiz;
+import Model.Quizes.NotAnswer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Manager
-{
-    State bearlyReader;
-    State liteRead;
-    State reasercher;
-    State excellentScore;
-    State failedExam;
-    State notExamed;
-    State passScore;
-    State postState;
-    State answerQuiz;
-    State notQuiz;
+public class Manager {
+    BarelyRead bearlyReader;
+    LiteReader liteRead;
+    Researcher reasercher;
+    ExcellentScore excellentScore;
+    FailedExam failedExam;
+    CannotExam cannotExam;
+    CanExam canExam;
+    PassScore passScore;
+    BarelyPost barelyPostState;
+    ActivelyPost activelyPostState;
+    AnswerQuiz answerQuiz;
+    NotAnswer notAnswer;
     State currStateRead;
     State currStateExam;
     State currStateFroum;
@@ -33,65 +32,84 @@ public class Manager
     List<State> currStates;
 
     public Manager() {
-        bearlyReader = new BearlyRead(this);
-        liteRead = new LiteRead(this);
+        bearlyReader = new BarelyRead(this);
+        liteRead = new LiteReader(this);
         reasercher = new Researcher(this);
         excellentScore = new ExcellentScore(this);
         failedExam = new FailedExam(this);
-        notExamed = new NotExamed(this);
+        cannotExam = new CannotExam(this);
+        canExam = new CanExam(this);
         passScore = new PassScore(this);
-        postState = new PostState(this);
+        barelyPostState = new BarelyPost(this);
+        activelyPostState = new ActivelyPost(this);
         answerQuiz = new AnswerQuiz(this);
-        notQuiz = new NotQuiz(this);
+        notAnswer = new NotAnswer(this);
         currStateRead = bearlyReader;
-        currStateExam = notExamed;
-        currStateFroum = postState;
-        currStateQuiz = notQuiz;
+        currStateExam = cannotExam;
+        currStateFroum = barelyPostState;
+        currStateQuiz = notAnswer;
         currStates = new ArrayList<>();
-        currStates.add(currStateRead);
-        currStates.add(currStateExam);
-        currStates.add(currStateFroum);
-        currStates.add(currStateQuiz);
+        currStates.add(notAnswer);
+        currStates.add(bearlyReader);
+        currStates.add(barelyPostState);
+        currStates.add(cannotExam);
     }
 
     public void excuteCommand(String command, String arg) {
         switch (command) {
             case "exam":
                 int score = Integer.parseInt(arg);
-                currStates.forEach(s->s.exam(score));
+                currStateRead.exam(score);
+                currStateExam.exam(score);
+                currStateFroum.exam(score);
+                currStateQuiz.exam(score);
                 break;
             case "read":
-                currStates.forEach(State::read);
+                currStateQuiz.read();
+                currStateRead.read();
+                currStateFroum.read();
+                currStateExam.read();
                 break;
             case "post":
-                currStates.forEach(s->s.post(arg));
+                currStateQuiz.post(arg);
+                currStateRead.post(arg);
+                currStateFroum.post(arg);
+                currStateExam.post(arg);
                 break;
             case "answer":
-                currStates.forEach(State::anwser);
+                currStateQuiz.anwser();
+                currStateRead.anwser();
+                currStateFroum.anwser();
+                currStateExam.anwser();
                 break;
             case "next_week":
-                currStates.forEach(State::next_week);
+                currStateQuiz.next_week();
+                currStateRead.next_week();
+                currStateFroum.next_week();
+                currStateExam.next_week();
                 break;
             case "status":
-                currStates.forEach(s->s.status(arg));
+                arg = currStateRead.status(arg);
+                arg = currStateFroum.status(arg);
+                arg = currStateQuiz.status(arg);
+                arg = currStateExam.status(arg);
+                System.out.println(arg);
                 break;
             default:
                 System.out.println("Illegal command");
         }
     }
 
-    public void setLiteReader() {
+    public void setLiteReader(int readed) {
         System.out.println("enter LiteReader state");
+        liteRead.readed = readed;
         currStateRead = liteRead;
     }
 
-    public void setReasercher() {
+    public void setReasercher(int readed) {
         System.out.println("enter Researcher state");
+        reasercher.readed = readed;
         currStateRead = reasercher;
-    }
-
-    public boolean isLiteReader() {
-        return currStateRead instanceof LiteRead;
     }
 
     public void setFailedExam() {
@@ -114,8 +132,25 @@ public class Manager
         currStateQuiz = answerQuiz;
     }
 
-    public void setNotQuiz() {
-        System.out.println("enter NotQuiz state");
-        currStateQuiz = notQuiz;
+    public void setNotAnswer() {
+        System.out.println("enter NotAnswer state");
+        currStateQuiz = notAnswer;
+    }
+
+    public void setCanExam() {
+        System.out.println("enter CanExam state");
+        currStateExam = canExam;
+    }
+
+    public void setActivelyPost(int post_count) {
+        System.out.println("enter ActivelyPost state");
+        activelyPostState.post_count = post_count;
+        currStateQuiz = activelyPostState;
+    }
+
+    public void setBarelyPost(int post_count) {
+        System.out.println("enter BarelyPost state");
+        barelyPostState.post_count = post_count;
+        currStateQuiz = barelyPostState;
     }
 }

@@ -17,7 +17,7 @@ public abstract class State {
 
     public void next_week(){}
 
-    public void status(String text){
-        System.out.println(text);
+    public String status(String text){
+        return text;
     }
 }
