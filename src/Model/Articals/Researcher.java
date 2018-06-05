@@ -19,6 +19,6 @@ public class Researcher extends State {
 
     @Override
     public String status(String text) {
-        return "***" + text + "***";
+        return "**" + text + "**";
     }
 }
